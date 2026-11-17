@@ -1,0 +1,15 @@
+# --- Secretos y Credenciales ---
+.env
+*.env
+
+# --- Datos generados y de pruebas ---
+AsignaturesData.csv
+ofertas.txt
+*.csv
+*.json
+*.sqlite3
+*.log
+
+# --- Configuraciones de editores ---
+.vscode/
+.idea/
