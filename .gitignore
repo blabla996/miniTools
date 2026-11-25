@@ -1,15 +1,54 @@
-# --- Secretos y Credenciales ---
+# --- Secretos y credenciales ---
 .env
-*.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json
 
-# --- Datos generados y de pruebas ---
-AsignaturesData.csv
-ofertas.txt
+# --- Entornos virtuales y gestores de paquetes ---
+.venv/
+venv/
+env/
+ENV/
+.uv/
+.poetry/
+
+# --- Cachés y compilados de Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Datos generados, bases de datos y salidas de bots ---
 *.csv
-*.json
+*.sqlite
 *.sqlite3
+*.db
 *.log
+*.tmp
+*.bak
+*.txt
+reports/
+outputs/
+downloads/
 
-# --- Configuraciones de editores ---
+# --- Notebooks (Jupyter) ---
+.ipynb_checkpoints/
+
+# --- Editores y sistema operativo ---
 .vscode/
 .idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

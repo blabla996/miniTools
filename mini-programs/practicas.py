@@ -6,7 +6,7 @@ import os
 load_dotenv()
 
 base_url = "https://borsapractiques.fib.upc.edu/ca/ofertes?combine=&sector_id=&candidate_type_id=1&"
-headers = {"User-Agent": "Mozilla/5.0"}
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36"}
 
 FIB_SESSION = os.getenv("FIB_SESSION")
 FIB_SESSION_COOKIE = os.getenv("FIB_SESSION_COOKIE")
