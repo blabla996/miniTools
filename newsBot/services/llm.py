@@ -28,7 +28,7 @@ def call_llm(prompt: str, skill:str ,schema=None, previous_interaction_id: str |
     max_retries = 3
     for attempt in range (1, max_retries+1):
         try:
-            interaction = client.interactions.create(**config)
+            interaction = client.interactions.create(**config, timeout=120.0)
             break
         except Exception as e:
             if getattr(e, "status_code", None) in (429, 503) and attempt < max_retries:
