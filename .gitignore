@@ -38,6 +38,7 @@ htmlcov/
 *.tmp
 *.bak
 *.txt
+!requirements.txt
 ofertas_detalle.json
 reports/
 outputs/
