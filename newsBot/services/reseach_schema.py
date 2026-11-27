@@ -2,10 +2,20 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
+class ResearchStep(BaseModel):
+    action: Literal["search", "finish"] = Field(
+        description="'search' si faltan datos importantes para explicar el mercado; 'finish' si ya hay suficiente evidencia"
+    )
+    queries: list[str] = Field(
+        default_factory=list,
+        description="Lista de 1 a 5 búsquedas concretas si action='search'. Vacía si action='finish'."
+    )
+
+
 class Evidence(BaseModel):
     id: str = Field(description="Identificador único corto, ej: 'ev_1', 'ev_2'")
     title: str = Field(description="Titular de la noticia o fuente")
-    url: str = Field(description="URL exacta devuelta por la búsqueda")
+    url: str = Field(description="URL exacta devuelta por la búsqueda o Yahoo Finance")
     published_date: str | None = Field(default=None, description="Fecha de publicación si aparece")
     snippet: str = Field(description="Dato o fragmento clave extraído de la fuente")
 
@@ -36,18 +46,10 @@ class UpcomingEvent(BaseModel):
 
 
 class ResearchOutput(BaseModel):
-    action: Literal["search", "finish"] = Field(
-        description="'search' si faltan datos importantes; 'finish' si ya hay suficiente evidencia para el reporte"
-    )
-    queries: list[str] = Field(
-        default_factory=list,
-        description="Lista de 2 a 4 búsquedas concretas si action='search'. Vacía si action='finish'."
-    )
     evidences: list[Evidence] = Field(default_factory=list)
     findings: list[Finding] = Field(default_factory=list)
     market_data: list[MarketData] = Field(default_factory=list)
     upcoming_events: list[UpcomingEvent] = Field(default_factory=list)
-    research_summary: str | None = Field(
-        default=None,
-        description="Síntesis ejecutiva completa cuando action='finish'"
+    research_summary: str = Field(
+        description="Síntesis ejecutiva completa basada en toda la investigación recopilada"
     )

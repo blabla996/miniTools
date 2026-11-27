@@ -4,14 +4,14 @@ import time
 # conection
 client = genai.Client()
 
-def call_llm(prompt: str, skill:str ,schema=None, previous_interaction_id: str | None = None) -> tuple[str, str]:
+def call_llm(prompt: str, skill:str, tLevel: str,schema=None, previous_interaction_id: str | None = None) -> tuple[str, str]:
     
     config = {
-        "model": "gemini-3.8-flash",
+        "model": "gemini-4-hydrogen",
         "input": prompt,
         "system_instruction": skill,
         "generation_config": {
-            "thinking_level": "low"
+            "thinking_level": tLevel
         }
     }
     
@@ -28,7 +28,7 @@ def call_llm(prompt: str, skill:str ,schema=None, previous_interaction_id: str |
     max_retries = 3
     for attempt in range (1, max_retries+1):
         try:
-            interaction = client.interactions.create(**config, timeout=120.0)
+            interaction = client.interactions.create(**config, timeout=180.0)
             break
         except Exception as e:
             if getattr(e, "status_code", None) in (429, 503) and attempt < max_retries:

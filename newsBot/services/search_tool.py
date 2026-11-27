@@ -1,13 +1,13 @@
 from tavily import TavilyClient
 import yfinance as yf
 import os
-from datetime import datetime, timezone
+from datetime import datetime
 
 tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 
 def search_web(
     query: str,
-    max_results: int = 5,
+    max_results: int = 3,
     seen_urls: set[str] = set()
 ) -> str:
     try:
@@ -62,7 +62,9 @@ def search_web(
         )
         
     body = "\n\n".join(formatted_result)
-    
+    chars = len(body)
+    approx_tokens = chars // 4  # En inglés/español, 1 token ≈ 3.5-4 caracteres
+    print(f"[TAVILY] '{query}' -> {len(body)} resultados | {chars} chars (~{approx_tokens} tokens)")
     return (
         f'<external_search_data query="{query}">\n'
         f"{body}\n"
@@ -177,8 +179,9 @@ def search_market_data() -> str:
     if not market_data:
         return f"<yahoo_market_data>\nNo Market data available\n</yahoo_market_data>"
     
-    fetched_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    fetched_at = datetime.now().strftime("%Y-%m-%d %H:%M UTC")
     body = "\n\n".join(market_data)
+    
     return (
         f'<yahoo_market_data source="Yahoo Finance (yfinance)" fetched_at="{fetched_at}">\n'
         f"{body}\n"
